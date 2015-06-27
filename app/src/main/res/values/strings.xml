@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SegInfoTP</string>
+
+    <string name="counter_value">0</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">ClickCounter</string>
+    <string name="click_me">Click Me!</string>
+
+</resources>

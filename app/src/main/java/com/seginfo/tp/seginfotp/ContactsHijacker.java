@@ -34,7 +34,7 @@ public class ContactsHijacker extends AsyncTask<Activity, Void, Integer> {
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String phones = "";
+                Contact contact = new Contact(Integer.parseInt(id), name);
                 if (Integer.parseInt(cur.getString(
                         cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                     Cursor pCur = cr.query(
@@ -44,11 +44,11 @@ public class ContactsHijacker extends AsyncTask<Activity, Void, Integer> {
                             new String[]{id}, null);
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        phones += phoneNo+",";
+                        contact.addPhone(phoneNo);
                     }
                     pCur.close();
                 }
-                contacts.add(new Contact(Integer.parseInt(id), name, phones));
+                contacts.add(contact);
             }
         }
         cur.close();

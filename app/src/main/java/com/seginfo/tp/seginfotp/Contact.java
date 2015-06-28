@@ -1,5 +1,9 @@
 package com.seginfo.tp.seginfotp;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -21,11 +25,24 @@ public class Contact {
         _telefonos.add(phone);
     }
 
-    public String toString(){
-        String telefonos = "";
-        for(String phone : _telefonos) telefonos += phone+",";
+    public JSONObject toJSON(){
+        try {
+            JSONObject contactJSON = new JSONObject();
+            contactJSON.put("id", _id); // Set the first name/pair
+            contactJSON.put("name", _nombre);
+            JSONArray phonesJSON = new JSONArray();
+            for( String phone : _telefonos ){
+                phonesJSON.put(phone);
+            }
+            contactJSON.put("phones", phonesJSON);
 
-        return "{id:"+_id+"; _nombre:"+_nombre+"; telefonos:["+telefonos+"]}";
+            return contactJSON;
+        }
+        catch(JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }
 

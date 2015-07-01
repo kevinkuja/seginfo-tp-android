@@ -83,5 +83,6 @@ public class ServerWrapper {
 
     public static void send_location(Location location){
         Log.i("Sending to Server:", location.toString());
+        ServerWrapper.post_data("save_location", "lat="+location.getLatitude()+"&lng="+location.getLongitude());
     }
 }

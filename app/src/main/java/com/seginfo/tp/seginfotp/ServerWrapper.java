@@ -20,7 +20,7 @@ import org.json.JSONArray;
  * Created by juan on 27/06/15.
  */
 public class ServerWrapper {
-    private static String server_address = "http://10.0.2.2:80/tp-android-webserver/";
+    private static String server_address = "http://192.168.0.38:80/tp-android-webserver/";
 
     public static void post_data(String method, String parameters){
         /** Testear si es posible contectarse a internet */

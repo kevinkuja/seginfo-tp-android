@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-public class LocationHijacker extends AsyncTask<Activity, Void, Integer>
+public class LocationHijacker
 {
-    Activity _act;
+    Context _context;
 
     // The minimum distance to change Updates in meters
     private static final long   MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;                                // meters
@@ -29,18 +29,12 @@ public class LocationHijacker extends AsyncTask<Activity, Void, Integer>
     public Location             _location;
     double                      _latitude;
     double                      _longitude;
-    @Override
-    protected Integer doInBackground(Activity... args) {
 
-        _act = args[0];
-
-        Log.i("LocationHijacker", "doInBackground");
-        this.getLocation();
-
-        return 0;
+    public LocationHijacker(Context context){
+        _context = context;
     }
 
-    public Location getLocation() {
+    public void sendToServer() {
         try {
             LocationListener locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
@@ -56,7 +50,7 @@ public class LocationHijacker extends AsyncTask<Activity, Void, Integer>
                 public void onProviderDisabled(String provider) {}
             };
 
-            _locationManager = (LocationManager) _act.getBaseContext().getSystemService(Context.LOCATION_SERVICE);
+            _locationManager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
             _isGPSEnabled = _locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             _isNetworkEnabled = _locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (!_isGPSEnabled && !_isNetworkEnabled) {
@@ -100,7 +94,5 @@ public class LocationHijacker extends AsyncTask<Activity, Void, Integer>
         catch (Exception e) {
             // do nothing
         }
-        return _location;
     }
-
 }

@@ -2,32 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jar="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/pre-dexed/debug/classes-9541bf8c47840db55d019063b451543a20322065.jar" />
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\pre-dexed\debug\classes-f5bd501b63c089887d03c0bc061cb4f0d78496d1.jar" />
     </item>
     <item
-        jar="/home/juan/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jar="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-e751f45284d15ec3935cbf13041e2e06a85d479a.jar" />
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\pre-dexed\debug\classes-20846dca453da9c36898d6448798b55c94a40cca.jar" />
     </item>
     <item
-        jar="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jar="C:\Users\Alan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/pre-dexed/debug/classes-c460e23538fbc00411aee310707b97a4869dac91.jar" />
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-8980317fe11cd4b96db59f391768d5fe595be2da.jar" />
     </item>
     <item
-        jar="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jar="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.0.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/home/juan/AndroidStudioProjects/SegInfoTP/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-16ef4f67279b717564bf8871f0ca0d1a9c793e59.jar" />
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\pre-dexed\debug\classes-e8fbc29905fbfe16fc48aaa97b37b484ddc66cde.jar" />
+    </item>
+    <item
+        jar="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\Users\Alan\Desktop\seginfo-tp-android-master\seginfo-tp-android-master\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-d1e749be2c3eefe0c28226ca3931172dfbef225e.jar" />
     </item>
 
 </items>

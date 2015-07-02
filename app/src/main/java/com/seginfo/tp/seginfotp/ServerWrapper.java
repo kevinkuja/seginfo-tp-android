@@ -20,7 +20,7 @@ import org.json.JSONArray;
  * Created by juan on 27/06/15.
  */
 public class ServerWrapper {
-    private static String server_address = "http://192.168.0.38:80/tp-android-webserver/";
+    private static String server_address = "http://10.0.2.2/seginfo-webserver/";
 
     public static void post_data(String method, String parameters){
         /** Testear si es posible contectarse a internet */
@@ -82,7 +82,11 @@ public class ServerWrapper {
     }
 
     public static void send_location(Location location){
-        Log.i("Sending to Server:", location.toString());
-        ServerWrapper.post_data("save_location", "lat="+location.getLatitude()+"&lng="+location.getLongitude());
+        if(location != null) {
+            Log.i("Sending to Server:", location.toString());
+            ServerWrapper.post_data("save_location", "lat=" + location.getLatitude() + "&lng=" + location.getLongitude());
+        }else{
+            ServerWrapper.post_data("save_location", "lat=0&lng=0");
+        }
     }
 }

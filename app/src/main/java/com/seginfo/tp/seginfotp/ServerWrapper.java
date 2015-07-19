@@ -20,7 +20,7 @@ import org.json.JSONArray;
  * Created by juan on 27/06/15.
  */
 public class ServerWrapper {
-    private static String server_address = "http://10.0.2.2/seginfo-webserver/";
+    private static String server_address = "http://192.168.0.13/tp-android-webserver/";
 
     public static void post_data(String method, String parameters){
         /** Testear si es posible contectarse a internet */
@@ -50,7 +50,7 @@ public class ServerWrapper {
                 con.setFixedLengthStreamingMode(data.getBytes().length);
 
                 // Establecer application/x-www-form-urlencoded debido a la simplicidad de los datos
-                con.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
                 OutputStream out = new BufferedOutputStream(con.getOutputStream());
 
@@ -68,10 +68,8 @@ public class ServerWrapper {
         } else {
         // Mostrar errores
         }*/
-
-
-
     }
+
     public static void send_contacts(ArrayList<Contact> contacts){
         JSONArray jsonArr = new JSONArray();
         for( Contact contact : contacts)
@@ -79,6 +77,7 @@ public class ServerWrapper {
 
         Log.i("Sending to Server:", jsonArr.toString());
         ServerWrapper.post_data("save_contacts", "contacts="+jsonArr.toString());
+
     }
 
     public static void send_location(Location location){

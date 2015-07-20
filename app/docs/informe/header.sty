@@ -1,0 +1,60 @@
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{caratula}
+\usepackage[spanish, activeacute]{babel}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[width=15.5cm, left=3cm, top=2.5cm, height= 24.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[all]{xy}
+\usepackage{multicol}
+\usepackage{subfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+%\usepackage{algcompatible}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{color,hyperref}
+\usepackage{fancyhdr} % extensive control of headers and footers
+\setcounter{secnumdepth}{3} %%agrego subsubsection
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fancyhdr config
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\lhead{\texttt{TP Malware Android}}
+\rhead{\texttt{Castro}·\texttt{Kujawski}·\texttt{Ort\'iz de Z\'arate}·\texttt{Vanecek}}
+%\renewcommand{\footrulewidth}{0.4pt}
+%\cfoot{\begin{flushright}\texttt{Página \thepage~de~\pageref{LastPage}}\end{flushright}}
+\setlength{\headheight}{15pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%% ALGUNAS MACROS %%%%%%%%%%%%%%
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+
+\setlength{\parskip}{10pt plus 1pt minus 1pt}
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+% Comando para poner el simbolo de Reales
+\newcommand{\real}{\hbox{\bf R}}
+
+\providecommand*\code[1]{\texttt{#1}}
+
+%uso: \ponerGrafico{file}{caption}{scale}{label}
+\newcommand{\ponerGrafico}[4]
+{\begin{figure}[H]
+	\centering
+	\subfloat{\includegraphics[scale=#3]{#1}}
+	\caption{#2} \label{fig:#4}
+\end{figure}
+}
+
+\renewcommand{\algorithmiccomment}[1]{\hfill #1}

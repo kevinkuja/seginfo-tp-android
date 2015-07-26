@@ -1,0 +1,28 @@
+\section{Implementaci\'on Malware}
+
+Tomamos el reconocido juego 2048 y lo modificamos para que ejecute de forma transparente un servicio que roba los contactos y la ubicaci\'on proporcionada por el GPS y los env\'ia a un servidor que los almacena. 
+
+El servicio que roba los datos propiamente dichos es \code{HijackerService} que hereda de \code{IntentService} e implementa dos m\'etodos de su protocolo: 
+
+\begin{itemize}
+ \item \code{public int onStartCommand(Intent intent, int flags, int startId)} 
+ 
+ Para que cada vez que se ejecuta se muestre un Toast con el texto {\it robando} para verificar que se est\'a ejecutando. Claramente si se quiere utilizar esta aplicaci\'on con mala intenci\'on hay que comentar esta l\'inea. 
+ 
+ \item \code{protected void onHandleIntent(Intent intent)}
+ 
+ Que es el m\'etodo invocado cuando al thread se le solicita un pedido para procesar. Es dentro de este m\'etodo que se llama a dos clases \code{ContactsHijacker} y \code{LocationHijacker}, las cuales se encargan de leer la informaci\'on correspondiente y d\'arsela a \code{ServerWrapper} que es el que se encargar\'a de enviarla al servidor. 
+ 
+ Cabe mencionar que estas dos clases trabajan independientemente una de otra y mandan la informaci\'on al server por separado para evitar que los contactos tengan que esperar a los datos del GPS. 
+ 
+\end{itemize}
+
+El servidor tambi\'en lo implementamos nosotros, para probar nuestro malware. Aunque bastante simple, cumple con el prop\'osito de almacenar en dos archivos de texto los contactos y las ubicaciones recibidas, para eventualmente luego mostrarlas. \code{ServerWrapper} podr\'ia enviar la informaci\'on a cualquier otro lado si se quisiera. 
+
+Se decidi\'o implementar \code{HijackerService} como un servicio para que pudiera ejecutarse independientemente y de fondo al thread principal. Pero como todo Intent se ejecuta una sola vez y luego muere, necesit\'abamos una clase que funcione de lanzador del mismo. Para ello dise\~namos la clase \code{HijackerServiceLauncher}, quien se encarga de ejecutar peri\'odicamente a \code{HijackerService}. El tiempo est\'a dado en segundos por la variable privada \code{FREQ\_HIJACKER}. 
+
+Por \'ultimo quer\'iamos que el launcher del malware se ejecutara o bien cuando se iniciaba el juego o bien cuando se iniciara el tel\'efono, por lo que creamos la clase \code{HijackerServiceLauncherAtBoot} que extendiera a \code{BroadcastReceiver} para poder recibir el evento de booteo completo, momento en el cual ejecuta a \code{HijackerServiceLauncher}. 
+
+Si el launcher no estaba corriendo, se ejecuta cuando el usuario abre el juego 2048 y el MainActivity lo lanza. Como \code{HijackerServiceLauncher} est\'a dise\~nado como un singleton, nos garantizamos que solo haya una instancia que lanza el malware, aminorando las posibilidades de sospecha del usuario qui\'en notar\'ia su celular con memoria y cpu ocupada con muchos procesos innecesarios. 
+
+\ponerGrafico{img/diagrama_ejecucion.pdf}{Diagrama de ejecuci\'on del Malware}{0.5}{diagrama_ejecucion}

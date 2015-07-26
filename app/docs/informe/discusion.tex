@@ -1,0 +1,31 @@
+\section{Discusi\'on}
+
+Para que funcione el malware tenemos que agregar ciertas variables al Manifest: el registro del service \code{HijackerService}, y de \code{HijackerServiceLauncherAtBoot} indicando que recibir\'a la acci\'on de \code{BOOT\_COMPLETED}, as\'i como los permisos que tendr\'a la aplicaci\'on: 
+
+\begin{enumerate}[nolistsep]
+ \item \code{READ\_CONTACTS} para leer los contactos.
+ \item \code{ACCESS\_FINE\_LOCATION} para acceder al gps.
+ \item \code{ACCESS\_COARSE\_LOCATION} para acceder a la ubicaci\'on a trav\'es del proveedor de internet.
+ \item \code{INTERNET} para poder usar internet.
+ \item \code{ACCESS\_NETWORK\_STATE} para leer el estado de la red.
+ \item \code{RECEIVE\_BOOT\_COMPLETED} para poder lanzar el malware al iniciar el celular. 
+\end{enumerate}
+
+Como decidimos hacer el malware en una sola aplicaci\'on estos son los m\'inimos permisos que se requieren para funcionar y para el juego 2048 se podr\'ia argumentar que son exagerados y un usuario podr\'ia sospechar de instalarlo. Pero como el malware no depende de \'el para funcionar, se podr\'ia poner en cualquier aplicaci\'on que los usara realmente ya que son permisos comunes y b\'asicos ciertas apps, y as\'i el usuario no sabr\'ia que se est\'an aprovechando de estos permisos para robarle informaci\'on. 
+
+Hay que tener en cuenta que para que el malware funcione este debe estar conectado a internet para poder mandar la informaci\'on al server, y el GPS debe estar prendido para obtener una ubicaci\'on m\'as precisa, aunque si no lo est\'a utilizar\'a la ubicaci\'on del proveedor de internet. 
+
+Es parametrizable la frecuencia de robo de la informaci\'on modificando la variable \code{FREQ\_HIJACKER} de la clase \code{HijackerServiceLauncher} y la direcci\'on del server a donde enviar los datos. Esto hay que setearlo antes de compilar la aplicaci\'on. 
+
+De los contactos decidimos robar solamente el nombre y los n\'umeros telef\'onicos por comodidad, pero se podr\'ia agregar cualquier otra informaci\'on que se quisiera. 
+
+A lo largo del desarrollo del malware no tuvimos muchas dificultades, simplemente el testeo de la aplicaci\'on en un emulador que tra\'ia ciertas limitaciones como puede ser que no reconozca el GPS y haya que enviarle la información por otro lado, y el testeo de que se inicie apenas se prenda el telefono. A pesar de eso, en cuestiones de visualización, l\'ogica y acceso a la información a robar no tuvimos problema, lo que nos concientiza sobre lo f\'acil que es modificar una aplicaci\'on y manipular al usuario para hacer fraude sin que este se diera cuenta. 
+
+\subsection{Mejoras}
+
+\begin{itemize}
+\item Configuración de la IP del server. 
+\item Configurar el tiempo de envio de la información. Actualmente esta fijo en 10 segundos, factor que podria generar que se note la sobrecarga y por consiguiente que se detecte el malware.
+\item Mejorar el servidor visualmente.
+\item Lograr identificar el dispositivo. Ya sea por un login o por la MAC del dispositivo.
+\end{itemize}
